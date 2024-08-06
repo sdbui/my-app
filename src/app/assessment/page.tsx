@@ -2,20 +2,12 @@
 import styles from './styles.module.css';
 import { useState } from 'react';
 import { JsonForms } from '@jsonforms/react';
-
 import { schema, uischema, data } from './lead';
-// import { person } from '@jsonforms/examples';
-
 import {
   materialRenderers,
   materialCells,
 } from '@jsonforms/material-renderers';
-
-// import { ErrorObject } from 'ajv'// doing this later....
-
-// const schema = person.schema;
-// const uischema = person.uischema;
-// const initialData = person.data;
+import { useRouter } from 'next/navigation';
 
 const initialData = data;
 
@@ -24,6 +16,7 @@ const initialData = data;
 
 export default function AssessmentPage() {
   const [data, setData] = useState(initialData);
+  const router = useRouter();
 
 
   function handleChange({data, errors}: {data: any, errors: any}) {
@@ -54,9 +47,14 @@ export default function AssessmentPage() {
 
   function handleSubmit() {
     console.log(data)
+
+    // last check for validation errors??
+
+
     // post to some endpoint
     // if error, an alert maybe
     // if successful.... navigate to thank you???
+    router.push('/thanks')
   }
 
   return (

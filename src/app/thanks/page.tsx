@@ -1,3 +1,13 @@
+'use client'
+import { useRouter } from 'next/navigation';
 export default function ThanksPage () {
-  return <h1>THANK YOU</h1>
+  const router = useRouter();
+  return (
+    <>
+      <h1>Thank you</h1>
+      <button onClick={() => {
+        router.push('/')
+      }}>Back to Homepage</button>
+    </>
+  )
 }
