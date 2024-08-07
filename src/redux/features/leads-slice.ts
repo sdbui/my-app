@@ -11,6 +11,7 @@ interface Lead {
   url: string;
   help: string;
   status: 'PENDING' | 'REACHED_OUT';
+  visas: string[]
 }
 
 type InitialState = {
@@ -37,6 +38,7 @@ export const fetchLeads = createAsyncThunk('leads/fetchLeads', async () => {
 })
 
 export const insertLead = createAsyncThunk('leads/insertLead', async (lead) => {
+  debugger;
   const response = await axios.post(LEADS_URL, lead);
   lead.status = 'pending';
   return lead;

@@ -1,13 +1,16 @@
 'use client';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLeads, addLead, insertLead, reachOut } from '@/redux/features/leads-slice';
+import { fetchLeads, reachOut } from '@/redux/features/leads-slice';
+import { logout } from '@/redux/features/auth-slice';
 import { useEffect } from 'react';
 import { AppDispatch, useAppSelector } from '@/redux/store';
 import styles from './styles.module.css';
+import { useRouter } from 'next/navigation';
 
 
 export default function AdminPage () {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
   const leads = useAppSelector((state) => state.leadsReducer.value.data);
   const status = useAppSelector((state) => state.leadsReducer.value.status);
@@ -18,18 +21,16 @@ export default function AdminPage () {
     }
   }, [status, dispatch])
 
-  function testAddLead () {
-    dispatch(insertLead({
-      firstName: 'Arlo',
-      lastName: 'Bui',
-      email: 'Arlo@mail.com',
-      url: 'arlo.com',
-      help: 'i am cute'
-    }));
-  }
-
   function handleReachOut (id: number) {
     dispatch(reachOut(id))
+  }
+
+  function handleLogout () {
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        router.push('/login')
+      })
   }
 
   return (
@@ -44,6 +45,7 @@ export default function AdminPage () {
           <div className={styles.user}>
             <div className={styles.img}></div>
             <span>Admin</span>
+            <button onClick={handleLogout}>logout</button>
           </div>
         </div>
         <div className={styles.content}>
@@ -59,15 +61,20 @@ export default function AdminPage () {
                   <th>Name</th>
                   <th>Email</th>
                   <th>URL</th>
+                  <th>Visas</th>
                   <th>Status</th>
                   <th></th>
                 </tr>
                 {leads.map((lead, idx) => {
+                  let visas = JSON.parse(lead.visas); 
                   return (
                     <tr key={idx}>
                       <td>{`${lead.firstname} ${lead.lastname}`}</td>
                       <td>{lead.email}</td>
                       <td>{lead.url}</td>
+                      <td>
+                        {visas.join(', ')}
+                      </td>
                       <td>{lead.status}</td>
                       <td>
                         {

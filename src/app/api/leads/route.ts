@@ -25,10 +25,10 @@ export async function POST(req: NextRequest,res: NextResponse) {
     email,
     url,
     help,
-    // visa, // can probably just store stringified array
-    // resume // may run into issues with the file upload???
+    visas,
+    resume
   } = body;
-  let vals = [firstName, lastName, email, url, help, 'pending']
+  let vals = [firstName, lastName, email, url, help, JSON.stringify(visas), resume, 'pending']
 
   // save to sqlite db???
   if (!db) {
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest,res: NextResponse) {
     })
   }
 
-  let sql = `INSERT INTO leads(firstname, lastname, email, url, help, status) VALUES(?,?,?,?,?,?)`
+  let sql = `INSERT INTO leads(firstname, lastname, email, url, help, visas, resume, status) VALUES(?,?,?,?,?,?,?,?)`
   db.run(sql, vals, function (err: Error) {
     if (err) return console.error(err.message);
     console.log('insert successful');

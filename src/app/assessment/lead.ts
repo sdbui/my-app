@@ -14,7 +14,7 @@ const schema = {
     url: {
       type: 'string',
     },
-    visa: {
+    visas: {
       type: 'array',
       uniqueItems: true,
       items: {
@@ -39,7 +39,7 @@ const schema = {
     'lastName',
     'email',
     'url',
-    'visa',
+    'visas',
     // 'resume',
     'help'
   ]
@@ -67,7 +67,7 @@ const uischema = {
     },
     {
       type: 'Control',
-      scope: '#/properties/visa',
+      scope: '#/properties/visas',
       label: 'Visa categories of interest',
     },
     {
@@ -82,8 +82,6 @@ const uischema = {
 }
 
 const data = {
-  firstName: 'John',
-  lastName: 'Doe',
   resume: null
 }
 

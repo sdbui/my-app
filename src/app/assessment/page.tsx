@@ -61,12 +61,17 @@ export default function AssessmentPage() {
 
   return (
     <>
+      <header>
+        <p>alma</p>
+        <h1>Get An Assessment Of Your Immigration Case</h1>
+      </header>
       <div>
-        <h1>DEBUG REDUX</h1>
-        <p>username: {username}</p>
-        {isAdmin && <h1>this user is admin</h1>}
+        <p>Want to understand your visa options?</p>
+        <p>Submit the form below and our team of experiencd attorneys will
+          review your information and send a preliminary assessment of your case
+          based on your goals
+        </p>
       </div>
-      <h1>ASSESSMENT PAGE</h1>
       <JsonForms 
         schema = {schema}
         uischema = {uischema}
@@ -90,10 +95,6 @@ export default function AssessmentPage() {
       <div>
         <button onClick={handleSubmit}>Submit</button>
       </div>
-
-
-      <p>DEBUG</p>
-      {JSON.stringify(data)}
     
     </>
   );
