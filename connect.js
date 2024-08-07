@@ -17,11 +17,12 @@ db.serialize(() => {
     id INTEGER PRIMARY KEY,
     firstname TEXT,
     lastname TEXT,
-    email TEXT,
+    email TEXT UNIQUE,
     url TEXT,
     help TEXT,
     resume BLOB,
-    visas JSON
+    visas JSON,
+    status TEXT
   )`, (err) => {
     if (err) return console.error(err.message);
     console.log('create leads table');
@@ -37,10 +38,11 @@ db.serialize(() => {
       'bui',
       'me@mail.com',
       'linkedin.com',
-      'help me please'
+      'help me please',
+      'pending'
     ];
 
-    const insertSql = `INSERT INTO leads(firstname, lastname, email, url, help) VALUES(?, ?, ?, ?, ?)`;
+    const insertSql = `INSERT INTO leads(firstname, lastname, email, url, help, status) VALUES(?,?,?,?,?,?)`;
     db.run(insertSql, vals1, function (err) {
       if (err) return console.error(err.message);
       const id = this.lastID; // get id of last inserted row

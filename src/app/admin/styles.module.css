@@ -1,0 +1,44 @@
+.admin {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  border-right: 1px solid #ddd;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  margin-bottom: 50px;
+}
+
+.nav {
+  list-style-type: none;
+  padding: 0;
+  flex-grow: 1;
+  margin: 0;
+}
+
+.user {}
+
+.user .img {
+
+}
+
+.content {
+  height: 100vh;
+}
+
+.table {
+  border: 1px solid #ddd;
+}
+
+.table th {
+  border-bottom: 1px solid #ddd;
+}
+
+.table td, .table th {
+  padding: 10px;
+}

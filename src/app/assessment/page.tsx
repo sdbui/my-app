@@ -8,19 +8,21 @@ import {
   materialCells,
 } from '@jsonforms/material-renderers';
 import { useRouter } from 'next/navigation';
+import { insertLead } from '@/redux/features/leads-slice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, useAppSelector } from '@/redux/store';
 
 const initialData = data;
 
-
-
-
 export default function AssessmentPage() {
+  const username = useAppSelector((state) => state.authReducer.value.username);
+  const isAdmin = useAppSelector((state) => state.authReducer.value.isAdmin);
   const [data, setData] = useState(initialData);
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
 
 
   function handleChange({data, errors}: {data: any, errors: any}) {
-
     // validate
     if (errors.length) {
       console.log('errors!!!')
@@ -33,8 +35,6 @@ export default function AssessmentPage() {
       setData(data);
 
     }
-
-
   }
 
   function handleFileChange(e) {
@@ -46,19 +46,26 @@ export default function AssessmentPage() {
   }
 
   function handleSubmit() {
-    console.log(data)
-
+    // console.log(data)
     // last check for validation errors??
 
-
     // post to some endpoint
-    // if error, an alert maybe
-    // if successful.... navigate to thank you???
-    router.push('/thanks')
+    dispatch(insertLead(data))
+      .unwrap()
+      .then(() => {
+        // to navigate to thank you page after success
+        router.push('/thanks')
+      })
+      .catch(err => console.log(err))
   }
 
   return (
     <>
+      <div>
+        <h1>DEBUG REDUX</h1>
+        <p>username: {username}</p>
+        {isAdmin && <h1>this user is admin</h1>}
+      </div>
       <h1>ASSESSMENT PAGE</h1>
       <JsonForms 
         schema = {schema}
